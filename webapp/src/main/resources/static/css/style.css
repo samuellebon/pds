@@ -1,0 +1,106 @@
+/* STYLE CSS */
+
+/**
+ * body
+ */
+body {
+    background: #f7f7f7;
+    margin-bottom: 60px;
+}
+
+/* btn add element
+ * products, products categories pages
+ */
+.btn-add {
+    float: right !important;
+}
+
+/* btn see element
+ * products, products categories pages
+ */
+.btn-see {
+    float: right !important;
+}
+
+/* btn return
+ * products manage page
+ */
+.btn-return {
+    float: right !important;
+}
+
+/* input, select... required asterix */
+.form-group.required .control-label:after {
+    color: #d00;
+    content: "*";
+    position: absolute;
+    margin-left: 8px;
+}
+
+/* legend for add product category which doesn't exist
+ * products page
+ */
+.legend-add-product-category {
+    font-size: 11px;
+    font-style: italic;
+    text-align: right;
+}
+
+/* position menu homepage
+ * index page
+ */
+.col-md-offset-3 {
+    margin-left: 25%;
+}
+
+/* style title menu
+ * index page
+ */
+.menu-title {
+    font-weight: bold;
+    text-align: center;
+}
+
+/**
+ * Footer
+ */
+footer.page-footer {
+    bottom: 0;
+    color: #fff;
+    position: absolute;
+    width: 100%;
+}
+.font-small {
+    font-size: .9rem;
+}
+.blue {
+    background-color: #2196f3 !important;
+}
+footer.page-footer .footer-copyright {
+    overflow: hidden;
+    background-color: rgba(0,0,0,.2);
+    color: rgba(255,255,255,.6);
+}
+.text-center {
+    text-align: center !important;
+}
+.pb-3, .py-3 {
+    padding-bottom: 1rem !important;
+}
+.pt-3, .py-3 {
+    padding-top: 1rem !important;
+}
+
+
+html{
+    position: relative;
+    min-height: 100%;
+}
+
+.container {
+    margin-bottom: 60px;
+}
+
+
+
+

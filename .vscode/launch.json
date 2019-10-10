@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - WebappApplication",
+            "request": "launch",
+            "mainClass": "kan10.webapp.WebappApplication",
+            "projectName": "webapp"
+        }
+    ]
+}

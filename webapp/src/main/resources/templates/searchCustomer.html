@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<!--/*/ <th:block th:include="fragments/header :: includes"></th:block> /*/-->
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>Search Customer Account</title>
+</head>
+<body>
+
+    <form id="range">
+
+        Birth date minimum <input type="date" name="min" /> <br />
+        Birth date maximum <input type="date" name="max" /> <br />
+        <input type = "button" value="Search" id="search" />
+    </form>
+
+<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
+
+<script type="text/javascript">
+
+    $("#search").click(function(){
+
+        var str = $('#range').serialize();
+        $.ajax({
+            url : '[[@{/customer}]]?' + str, // La ressource ciblée
+            type : 'GET', // Le type de la requête HTTP.
+            data : 'html'
+
+        });
+
+
+
+    });
+
+
+
+
+    var getUrlParameter = function getUrlParameter(sParam) {
+        var sPageURL = window.location.search.substring(1),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+            }
+        }
+    };
+
+    var max = getUrlParameter("max");
+    var data = getUrlParameter("tata");
+
+</script>

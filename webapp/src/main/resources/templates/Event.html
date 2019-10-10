@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--/*/ <th:block th:include="fragments/header :: includes"></th:block> /*/-->
+
+<body>
+
+<div class="container">
+    <br/>
+
+    <!-- Breadcrumb -->
+    <div class="row">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+            <li class="breadcrumb-item"><a th:href="@{/eventsmanage}">Manage events</a></li>
+            <li class="breadcrumb-item active">Create an event</li>
+        </ol>
+    </div>
+
+    <form id="form">
+
+        <div class="form-group required">
+            <label for="event_name" class="control-label">Name</label>
+            <input type="text" class="form-control" id="event_name" name="event_name" required/>
+        </div>
+        <div class="form-group required">
+            <label for="event_description" class="control-label">Description</label>
+            <input type="text" class="form-control" id="event_description" name="event_description" required/>
+        </div>
+        <div class="form-group required">
+            <label for="event_keywords" class="control-label">Tags</label>
+            <input type="text" class="form-control" id="event_keywords" name="event_keywords" required/>
+        </div>
+        <div id="div_event_keywords" class="form-group required"></div>
+
+
+        <button class="btn btn-outline-success" id="CreateEvent"> Save </button>
+
+    </form>
+
+
+</div>
+<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
+
+<script type="text/javascript">
+    $(function(){
+
+        $('#CreateEvent').click(function () {
+
+            var name = $('#event_name').val();
+
+            var description = $('#event_description').val();
+
+
+
+            $.ajax({
+                url : '[[@{/event}]]?',
+                dataType : 'json',
+                contentType: "application/json; charset=utf-8",
+                method : 'post',
+                data : JSON.stringify({ "label": name , "description" : description })
+            });
+        });
+    });
+
+    $(function(){
+       document.getElementById('event_keywords').addEventListener('keypress',
+       function(event) {
+           if(event.keyCode == 13) {
+               if($('#event_keywords').val() != "") {
+                   var textContent = $('#event_keywords').val();
+                   addKeyword(textContent);
+               }
+               event.preventDefault();
+           }
+       });
+
+        autocompleteTag();
+
+       function autocompleteTag() {
+           $.ajax({
+               url : '[[@{/tags}]]?',
+               dataType : 'json',
+
+               success : function (data) {
+                   $('#event_keywords').autocomplete({
+                       source : data,
+                       minLength : 2
+                   });
+
+                   $('#event_keywords').trigger('change');
+               }
+           });
+       }
+    });
+
+    function removeKeyword(name) {
+        $.ajax({
+            url: '[[@{/removeKeyword?name=}]]' + name,
+            type: 'put',
+        });
+
+        $('#'+ name).remove();
+    }
+
+    function addKeyword(name) {
+        $.ajax({
+            url: '[[@{/addKeyword?name=}]]' + name,
+            type: 'put',
+        });
+
+        var button = $("<button type=\"button\" id=\""+name+"\" class=\"btn btn-outline-danger\" onClick=\"removeKeyword('"+name+"')\"></button>").text(name);
+        $('#div_event_keywords').append(button);
+    }
+</script>

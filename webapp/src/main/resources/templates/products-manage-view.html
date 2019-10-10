@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--/*/ <th:block th:include="fragments/header :: includes"></th:block> /*/-->
+<body>
+<br/>
+<br/>
+
+<div class="container">
+
+    <!-- Breadcrumb -->
+    <div class="row">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="./">Home</a></li>
+            <li class="breadcrumb-item active">Manage Products</li>
+        </ol>
+    </div>
+    <!-- // Breadcrumb -->
+
+    <br/>
+
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="card bg-light mb-3">
+                <div class="card-header">
+                    <h4 class="menu-title">Products and Products categories manage</h4>
+                </div>
+                <div class="card-body">
+                    <div class="list-group">
+                        <a th:href="@{/productslist}" class="list-group-item list-group-item-action">Products list</a>
+                        <a th:href="@{/productscategorieslist}" class="list-group-item list-group-item-action">Products categories list</a>
+                        <a th:href="@{/compareprices}" class="list-group-item list-group-item-action">Compare prices</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->

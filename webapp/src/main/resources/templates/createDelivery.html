@@ -1,0 +1,13 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--/*/ <th:block th:include="fragments/header :: includes"></th:block> /*/-->
+<body>
+<body>
+        <h1>CREATE NEW DELIVERY</h1>
+        <h3>Select a type of delivery</h3>
+        <ul class="list-group">
+            <li class="list-group-item"><a type="button" class="btn btn-primary btn-lg btn-block" th:href="@{/createHomeDelivery}" role="button">Home Delivery</a></li>
+            <li class="list-group-item"><a type="button" class="btn btn-primary btn-lg btn-block" th:href="@{/createStoreDelivery}" role="button">Store Delivery</a></li>
+            <li class="list-group-item"><a type="button" class="btn btn-primary btn-lg btn-block" th:href="@{/createBoxDelivery}" role="button">Box Delivery</a></li>
+        </ul>
+<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->

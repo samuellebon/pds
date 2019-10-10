@@ -1,0 +1,167 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--/*/ <th:block th:include="fragments/header :: includes"></th:block> /*/-->
+
+<body>
+
+    <div class="container">
+        <br/>
+
+        <!-- Breadcrumb -->
+        <div class="row">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+                <li class="breadcrumb-item"><a th:href="@{/productsmanage}">Manage Products</a></li>
+                <li class="breadcrumb-item active">Products list</li>
+            </ol>
+        </div>
+        <!-- // Breadcrumb -->
+
+        <!-- Btn add product -->
+        <button type="button" class="btn btn-primary btn-add" data-toggle="modal" data-target="#modalAddProduct">
+            Add product
+        </button>
+        <!--// Btn add product -->
+
+        <!-- Title -->
+        <div class="row">
+            <div class="col-sm-12">
+                <h1>Products list</h1>
+            </div>
+        </div>
+        <!--// Title -->
+
+        <div class="row">
+            <div class="col-sm-6">
+                <form id="form">
+                    <div class="form-group">
+                        <select class="form-control" id="category" name="category">
+                            <option selected value="">Filter by store</option>
+                            <option th:each="c : ${allcategories}" th:value="${c.name}" th:text="${c.name}"/>
+                        </select>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Table list products -->
+        <table id="result" class="table table-hover table-bordered table-striped">
+            <thead>
+                <tr class="table-default">
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Weight</th>
+                    <th>Width</th>
+                    <th>Length</th>
+                    <th>Height</th>
+                    <th>Category</th>
+                </tr>
+            </thead>
+        </table>
+        <!--// Table list products -->
+
+        <!-- Modal Add product -->
+        <div class="modal fade" id="modalAddProduct" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <form action="#" th:action="@{/createproduct}" th:object="${product}" method="post" id="formAddProduct">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Add product</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group required">
+                                <label for="product_category" class="control-label">Product category</label>
+                                <br/>
+                                <select class="form-control" id="product_category" name="product_category" th:field="*{productCategory}" required="required">
+                                    <option selected value="">Please select a category</option>
+                                    <option th:each="c : ${allcategories}" th:value="${c.id}" th:text="${c.name}"/>
+                                </select>
+                                <p class="legend-add-product-category">Product category doesn't exist? Click <a th:href="@{/productscategorieslist}">here</a> to create it.</p>
+                            </div>
+                            <div class="form-group required">
+                                <label for="product_name" class="control-label">Name</label>
+                                <input type="text" class="form-control" id="product_name" name="product_name" th:field="*{name}" required/>
+                            </div>
+                            <div class="form-group required">
+                                <label for="product_description" class="control-label">Description</label>
+                                <input type="text" class="form-control" id="product_description" name="product_description" th:field="*{description}" required/>
+                            </div>
+                            <div class="form-group required">
+                                <label for="product_description" class="control-label">Weight</label>
+                                <input type="number" min="1" class="form-control" id="product_weight" name="product_weight" th:field="*{weight}" required/>
+                            </div>
+                            <div class="form-group required">
+                                <label for="product_width" class="control-label">Width</label>
+                                <input type="number" min="1"class="form-control" id="product_width" name="product_width" th:field="*{width}" required/>
+                            </div>
+                            <div class="form-group required">
+                                <label for="product_length" class="control-label">Length</label>
+                                <input type="number" min="1" class="form-control" id="product_length" name="product_length" th:field="*{length}" required />
+                            </div>
+                            <div class="form-group required">
+                                <label for="product_height" class="control-label">Height</label>
+                                <input type="number" min="1" class="form-control" id="product_height" name="product_height" th:field="*{height}" required/>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <input type="submit" class="submit btn btn-primary" id="btnAddProduct" value="Add a new product"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- // Modal Add product -->
+
+    </div>
+<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
+
+<script type="text/javascript">
+    $(function(){
+
+        var str = $('#form').serialize();
+        var table = $('#result').DataTable({
+            'ajax': {
+                'contentType': 'application/json',
+                'url': '[[@{/product}]]?' + str,
+                'type': 'POST',
+                'data': function (d) {
+                    return JSON.stringify(d);
+                }
+            },columns: [
+                { data: 'id' },
+                { data: 'name' },
+                { data: 'description' },
+                { data: 'weight' },
+                { data: 'width' },
+                { data: 'length' },
+                { data: 'height' },
+                { data: 'productCategory.name' }
+            ],
+            searching: true,
+            "processing": true,
+            "serverSide": true,
+            searchDelay: 1000
+
+        });
+
+        $('#form').change(function() {
+            redraw();
+        });
+
+        function redraw() {
+            table.clear();
+
+            var str = $('#form').serialize();
+
+
+
+            table.ajax.url( '[[@{/product}]]?'+ str ).load();
+        }
+
+    });
+</script>

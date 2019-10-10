@@ -1,0 +1,148 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--/*/ <th:block th:include="fragments/header :: includes"></th:block> /*/-->
+<br/>
+<br/>
+
+<div class="container">
+
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-sm-12">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="./">Home</a></li>
+                <li class="breadcrumb-item"><a th:href="@{/statisticsmanage}">Statistics</a></li>
+                <li class="breadcrumb-item active">Data row</li>
+            </ol>
+        </div>
+    </div>
+    <!-- // Breadcrumb -->
+
+    <!-- Title -->
+    <div class="row">
+        <div class="col-sm-12">
+            <h2 th:utext="${primarytitle}"></h2>
+        </div>
+    </div>
+    <!-- // Title -->
+
+    <div class="row">
+        <div class="col-sm-12">
+            <p th:utext="${subtitle}"></p>
+        </div>
+    </div>
+
+    <br/>
+
+    <div clas="row">
+        <form role="form" th:action="@{/statisticsoutliers}"  method="get" id="statisticsoutliers">
+            <div class="col-sm-5 offset-md-7">
+                <div class="form-group">
+                    <select class="form-control" id="ddstore" name="ddstore">
+                        <option selected value="">Select a commercial sign</option>
+                        <option th:each="s : ${allstores}" th:value="${s.label}" th:text="${s.label}"/>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-5 offset-md-7">
+                <div class="form-group">
+                    <select class="form-control" id="ddyear" name="ddyear">
+                        <option selected value="">Select a year</option>
+                        <option>2017</option>
+                        <option>2018</option>
+                        <option>2019</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-5 offset-md-7">
+                <input style="float: right;" type="submit" class="submit btn btn-primary" id="btnValidate" value="Validate"/>
+            </div>
+        </form>
+    </div>
+
+    <br/>
+    <br/>
+    <br/>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <h2 th:utext="${secondarytitle}"></h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12 table-responsive">
+            <table class="table table-hover table-bordered">
+                <thead>
+                <tr>
+                    <th scope="col">Months</th>
+                    <th scope="col">No. connected clients</th>
+                    <th scope="col">No. disconnected clients</th>
+                    <th scope="col">% connected clients</th>
+                    <th scope="col">% disconnected clients</th>
+                    <th scope="col">Total clients</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!--[iter.index]-->>
+<!--                <tr class="table-light" th:each="mn,iter : ${month_names}">-->
+<!--                    <td style="font-weight: bold;" th:text="${mn}"></td>-->
+<!--                    <td th:text="${statsbymonth_co[iter.index]}"></td>-->
+<!--                    <td th:text="${statsbymonth_notco[iter.index]}"></td>-->
+<!--                    <td th:text="${percentbymonth_co[iter.index] + ' %'}"></td>-->
+<!--                    <td th:text="${percentbymonth_notco[iter.index] + ' %'}"></td>-->
+<!--                    <td th:text="${statsbymonth}"></td>-->
+<!--                </tr>-->
+<!--                Full Year-->
+                <tr class="table-info">
+                    <th scope="row">February</th>
+                    <td th:text="${statsbyyear_co}"></td>
+                    <td th:text="${statsbyyear_notco}"></td>
+                    <td th:text="${percentbyyear_co + ' %'}"></td>
+                    <td th:text="${percentbyyear_notco + ' %'}"></td>
+                    <td th:text="${statsbyyear}"></td>
+                </tr>
+                <tr class="table-info">
+                    <th scope="row">December</th>
+                    <td th:text="${statsbyyear_co}"></td>
+                    <td th:text="543"></td>
+                    <td th:text="46"></td>
+                    <td th:text="54"></td>
+                    <td th:text="${statsbyyear}"></td>
+                </tr>
+               <tr class="table-info">
+                    <th scope="row">Average</th>
+                    <td th:text="${avg_nb_co}"></td>
+                    <td th:text="${avg_nb_notco}"></td>
+                    <td th:text="${avg_per_co + ' %'}"></td>
+                    <td th:text="${avg_per_notco + ' %'}"></td>
+                    <td th:text="${avg_nb_total}"></td>
+                </tr>
+                <tr class="table-info">
+                    <th scope="row">Variance</th>
+                    <td th:text="${variance_nb_co}"></td>
+                    <td th:text="${variance_nb_notco}"></td>
+                    <td th:text="${variance_per_co + ' %'}"></td>
+                    <td th:text="${variance_per_notco + ' %'}"></td>
+                    <td th:text="${variance_nb_total}"></td>
+                </tr>
+                <tr class="table-info">
+                    <th scope="row">Standard deviation</th>
+                    <td th:text="${sigma_nb_co}"></td>
+                    <td th:text="${sigma_nb_notco}"></td>
+                    <td th:text="${sigma_per_co + ' %'}"></td>
+                    <td th:text="${sigma_per_notco + ' %'}"></td>
+                    <td th:text="${sigma_nb_total}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+</div>
+
+
+</body>
+</html>
+<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->

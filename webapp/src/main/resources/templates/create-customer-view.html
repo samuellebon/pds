@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--/*/ <th:block th:include="fragments/header :: includes"></th:block> /*/-->
+
+<head>
+    <meta charset="UTF-8">
+    <title>Add a customer account</title>
+</head>
+<body>
+
+<!--/*@thymesVar id="Customer" type=""*/-->
+<form action="#" th:action="@{/createCustomerAccount}" th:object="${Customer}"method="post" id="createCustomerAccount">>
+    First name <input type="text" name="first_name" /> <br />
+    Last name <input type="text" name="last_name" /> <br />
+    Birth date <input type="date" name="birt_hdate" /> <br />
+    Address <input type="text" name="address" /> <br />
+    Gender <input type="text" name="gender" /> <br />
+    Phone Number <input type="text" name="telNumber" /> <br />
+    <input type="submit" value="Create" />
+</form>
+
+</body>
+</html>

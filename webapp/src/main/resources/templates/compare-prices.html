@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!--/*/ <th:block th:include="fragments/header :: includes"></th:block> /*/-->
+
+<head>
+    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/themes/smoothness/jquery-ui.css" />
+    <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/kt-2.5.0/r-2.2.2/datatables.min.css"/>
+</head>
+
+<body>
+
+<div class="container-fluid">
+    <br>
+    <div class="row">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+            <li class="breadcrumb-item"><a th:href="@{/productsmanage}">Manage Products</a></li>
+            <li class="breadcrumb-item active">compare prices</li>
+        </ol>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>compare prices</h1>
+        </div>
+    </div>
+
+
+    <br>
+
+    <table id="result" class="table table-hover table-bordered table-striped">
+        <thead>
+        <a class="table-default">
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Store</th>
+            <th>Price</th>
+            <th>Link</th>
+        </a>
+        </tr>
+
+        </thead>
+        <!-- <tbody>
+
+         </tbody> -->
+    </table>
+</div>
+
+</body>
+</html>
+
+<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
+
+<script type="text/javascript">
+
+    $(function(){
+
+        var str = $('#form').serialize();
+
+        var table = $('#result').DataTable({
+            'ajax': {
+                'contentType': 'application/json',
+                'url': '[[@{/storeProduct}]]?' + str,
+                'type': 'POST',
+                'data': function (d) {
+                    return JSON.stringify(d);
+                }
+            },columns: [
+                { data: 'product.id' },
+                { data: 'product.name' },
+                { data: 'product.description' },
+                { data: 'product.productCategory.name' },
+                { data: 'store.label' },
+                { data: 'price' },
+                { data : 'product.id',
+                    render : function (id) {
+
+
+                        return '<a href="/viewproduct/' + id + '"> buy</a>';
+
+                    }}],
+            searching: true,
+            "processing": true,
+            "serverSide": true,
+            searchDelay: 1000
+        });
+
+        $('#form').change(function() {
+            redraw();
+        });
+
+        function redraw() {
+            table.clear();
+
+            var str = $('#form').serialize();
+
+            console.log('[[@{/storeProduct}]]?'+ str);
+
+            table.ajax.url( '[[@{/storeProduct}]]?'+ str ).load();
+        }
+
+    });
+
+
+
+
+</script>

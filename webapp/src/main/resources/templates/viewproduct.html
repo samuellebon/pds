@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!--/*/ <th:block th:include="fragments/header :: includes"></th:block> /*/-->
+
+<head>
+    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/themes/smoothness/jquery-ui.css" />
+    <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/kt-2.5.0/r-2.2.2/datatables.min.css"/>
+</head>
+
+<body>
+<div class="container-fluid">
+    <br>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>Product detail</h1>
+        </div>
+    </div>
+
+    <div class= "container">
+        <div class="row">
+            <div class="col-md-5">
+                <img src="#"  alt="image" style="width: 100%; height:100px;"/>
+            </div>
+            <div class="col-md-5">
+                <h3> Name :  </h3>
+                <p>Description : </p>
+                <p>Category :</p>
+                <p>Store : </p>
+                <p>Stock : </p>
+                <p>Price : </p>
+                <p>Color : <strong> Black </p>
+                <button type="submit" class="btn btn-primary">ajouter au panier</button>
+            </div>
+        </div>
+    </div>
+    </section>
+
+</body>
+</html>
+<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->

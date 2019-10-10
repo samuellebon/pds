@@ -1,0 +1,15 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--/*/ <th:block th:include="fragments/header :: includes"></th:block> /*/-->
+<body>
+    <h1>Here you can manage your deliveries</h1>
+    <br/>
+    <ul class="list-group">
+        <li class="list-group-item active">Which kind of operation do you want to do ? </li>
+        <li class="list-group-item">Set delivery for a product <a class="btn btn-primary" th:href="@{/createDelivery}" role="button">go</a></li>
+        <li class="list-group-item"><del>See all deliveries in database </del><button  type="button" class="btn btn-danger">go</button></li>
+        <li class="list-group-item"><del>Update deliveries for a product</del> <button type="button" class="btn btn-danger">go</button></li>
+        <li class="list-group-item"><del>Delete an existing delivery for a product</del> <button type="button" class="btn btn-danger">go</button></li>
+        <li class="list-group-item"><del>Search an existing delivery </del><button type="button" class="btn btn-danger">go</button></li>
+    </ul>
+<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->

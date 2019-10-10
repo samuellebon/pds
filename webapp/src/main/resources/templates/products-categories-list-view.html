@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--/*/ <th:block th:include="fragments/header :: includes"></th:block> /*/-->
+<body>
+<br/>
+<br/>
+
+    <div class="container">
+
+        <br/>
+
+        <!-- Breadcrumb -->
+        <div class="row">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+                <li class="breadcrumb-item"><a th:href="@{/productsmanage}">Manage Products</a></li>
+                <li class="breadcrumb-item active">Products categories list</li>
+            </ol>
+        </div>
+        <!-- // Breadcrumb -->
+
+        <!-- Title -->
+        <div class="row">
+            <div class="col-sm-12">
+                <h1>Products categories list</h1>
+            </div>
+        </div>
+        <!--// Title -->
+
+        <!-- Btn add product category -->
+        <div class="row">
+            <div class="col-sm-12">
+                <button type="button" class="btn btn-primary btn-lg btn-add" data-toggle="modal" data-target="#modalAddProductCategory">
+                    Add product category
+                </button>
+            </div>
+        </div>
+        <!--// Btn add product category -->
+
+        <br/>
+
+        <!-- Table list products categories -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="table-responsive">
+                    <table id="list_products" class="table table-hover table-striped table-bordered">
+                        <thead>
+                        <tr class="table-default">
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr scope="row" th:each="productcategory : ${allproductscategories}">
+                            <td th:text="${productcategory.id}"></td>
+                            <td th:text="${productcategory.name}"></td>
+                            <td th:text="${productcategory.description}"></td>
+                            <td>
+                                <a href=""><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                &nbsp;
+                                <a href=""><i class="fa fa-trash" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!--// Table list products categories -->
+
+        <!-- Modal Add product category -->
+        <div class="modal fade" id="modalAddProductCategory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <form action="#" th:action="@{/createproductcategory}" th:object="${productcategory}" method="post" id="formAddProductCategory">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Add product category</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group required">
+                                <label for="product_name" class="control-label">Name</label>
+                                <input type="text" class="form-control" id="product_name" name="product_name" th:field="*{name}" required/>
+                            </div>
+                            <div class="form-group required">
+                                <label for="product_description" class="control-label">Description</label>
+                                <input type="text" class="form-control" id="product_description" name="product_description" th:field="*{description}" required/>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <input type="submit" class="submit btn btn-primary" id="btnAddProductCategory" value="Add a new product category"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- // Modal Add product category -->
+
+    </div>
+
+<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->

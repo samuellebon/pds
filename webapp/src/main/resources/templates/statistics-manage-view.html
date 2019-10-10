@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--/*/ <th:block th:include="fragments/header :: includes"></th:block> /*/-->
+<br/>
+<br/>
+
+<div class="container">
+
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-sm-12">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="./">Home</a></li>
+                <li class="breadcrumb-item active">Statistics</li>
+            </ol>
+        </div>
+    </div>
+    <!-- // Breadcrumb -->
+
+    <br/>
+
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="card">
+                <div class="card-header h5" style="text-align: center;">
+                    Attendance statistics
+                </div>
+                <div class="card-title">
+                    <p class="card-body">
+                        <a th:href="@{/statisticsdatarow}" class="list-group-item list-group-item-action">Data row</a>
+                        <a th:href="@{/statisticsoutliers}" class="list-group-item list-group-item-action">Outliers</a>
+                        <a th:href="@{/statisticsadjusteddata}" class="list-group-item list-group-item-action">Adjusted data</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
+<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->

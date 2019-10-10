@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/html">
+<!--/*/ <th:block th:include="fragments/header :: includes"></th:block> /*/-->
+<body>
+
+    <div class="container">
+        <br/>
+        <div class="row">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+            </ol>
+        </div>
+        <br/>
+        <br/>
+        <h1>
+            Set my custom path
+        </h1>
+
+        <!-- Navigation Bar where the user can choose critera on his path setting-->
+        <nav class="navbar navbar-light bg-light">
+            <a class="navbar-brand">Choose critera </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ">
+                    <li class="nav-item">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="byStoreList" onclick="showStoreList()">
+                            <label class="custom-control-label" for="byStoreList">By Store List</label>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="byProduct" onclick="showproductForm()">
+                            <label class="custom-control-label" for="byProduct">By Product(s)</label>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="byTime" onclick="showtimeForm()">
+                            <label class="custom-control-label" for="byTime">By Time</label>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <form action="#" th:action="@{/setcustompath}" th:object="${storelist}" method="post" id="setcustompath">
+            <!-- Display all existing store on a array. The user can choose multiple store to be on the path-->
+            <div class="container" id="storelistform" style="display:none;">
+                <p>Select store(s) :</p>
+                <div th:each="store : ${storelist}">
+                    <input type="checkbox" class="storeBox" th:id="${{store.getLabel()}}" th:value="${{store.label}}"/>
+                    <label th:for="${{store}}" th:text="${store.label}"></label>
+                </div>
+            </div>
+
+            <!-- Form where the user can give a product reference which have to be found on stores during the mall visit-->
+            <div class="container"  id="productForm" style="display:none;">
+                <p>Select a product : (not available yet)</p>
+                <input class="form-control" type="text" placeholder="Find a product " readonly>
+            </div>
+
+            <!-- Double time form, where the user can give his starting time and ending time-->
+            <div class="container" id="timeForm" style="display: none">
+                <p>Set your start and end time : (not available yet)</p>
+                <div class="form-group row">
+                    <label for="startingTime" class="col-2 col-form-label">Start time</label>
+                    <div class="col-10">
+                        <input class="form-control" type="time" id="startingTime" readonly>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="endTime" class="col-2 col-form-label">End time</label>
+                    <div class="col-10">
+                        <input class="form-control" type="time" id="endTime" readonly>
+                    </div>
+                    <br/>
+                </div>
+            </div>
+
+            <!-- Default message to inform the user he can generate a path without giving any critera.
+            in this case, a path based on his profile will be generate by the system-->
+
+            <div class="container" id="defaultText" style="display: block">
+                <p> If you choose no criteria, we'll generate you a path based on your shopping habit !</p>
+                <p> Just relax and enjoy our recommendations !</p>
+                <br/>
+            </div>
+            <div class="button">
+                <button type="submit" class="submit btn btn-primary" id="submitcriteraBtn" >Get my path</button>
+            </div>
+
+        </form>
+
+        <form  th:action="@{/setcustompathbyprofile}" th:object="${allclient}" method="post" id="setcustompathbyprofile">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="clientid">Select Client</label>
+                    <select class="form-control" id="clientid" name="clientid">
+                        <option selected value="">All</option>
+                        <option th:each="client : ${allclient}" th:id="${client.id}" th:value="${client.getId()}" th:text="${client.id}" />
+                    </select>
+                </div>
+            </div>
+
+            <div class="button">
+                <button type="submit" class="submit btn btn-primary" id="submitwithoutcriteraBtn" >Get my path by profile</button>
+            </div>
+        </form>
+    </div>
+    <!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
+
+    <script type="text/javascript">
+        function showStoreList(){
+            var checkboxStoreList = document.getElementById('byStoreList');
+            var displayStoreList = document.getElementById('storelistform');
+            if(checkboxStoreList.checked == true) {
+                displayStoreList.style['display'] = 'block';
+            } else {
+                displayStoreList.style['display'] = 'none';
+            }
+            displayAutoMessage();
+        }
+
+        function showproductForm(){
+            var checkboxProductForm = document.getElementById('byProduct');
+            var displayProductForm = document.getElementById('productForm');
+            if(checkboxProductForm.checked == true) {
+                displayProductForm.style['display'] = 'block';
+            } else {
+                displayProductForm.style['display'] = 'none';
+            }
+            displayAutoMessage();
+        }
+
+        function showtimeForm(){
+            var checkboxTimeForm = document.getElementById('byTime');
+            var displayTimeForm = document.getElementById('timeForm');
+            if(checkboxTimeForm.checked == true) {
+                displayTimeForm.style['display'] = 'block';
+            } else {
+                displayTimeForm.style['display'] = 'none';
+            }
+            displayAutoMessage();
+        }
+
+        function displayAutoMessage(){
+            var displayStoreList = document.getElementById('storelistform');
+            var displayProductForm = document.getElementById('productForm');
+            var displayTimeForm = document.getElementById('timeForm');
+            var displayDefaultText = document.getElementById('defaultText')
+            if (displayStoreList.style['display'] == 'none' && displayProductForm.style['display'] == 'none' && displayTimeForm.style['display'] == 'none'){
+                displayDefaultText.style['display'] = 'block';
+            } else {
+                displayDefaultText.style['display'] = 'none';
+            }
+        }
+
+        $('.storeBox').click(function () {
+        $.ajax({
+                type: 'PUT',
+                url: '/addSelectedStore?label=' + this.id,
+                success: function addCell() {
+                    alert('success');
+                }
+            });
+        });
+
+        $('#clientid').on('change', function(){
+            var id = $('#clientid option:selected').attr('id');
+
+            $.ajax({
+                url: '[[@{/addSelectedClient?id=}]]' + id,
+                type: 'put',
+            })
+        });
+
+    </script>

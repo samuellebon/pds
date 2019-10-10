@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--/*/ <th:block th:include="fragments/header :: includes"></th:block> /*/-->
+<body>
+
+<br/>
+<h1>Choose an operation</h1>
+<br/>
+
+<ul class="list-group">
+    <li class="list-group-item">Add Customer account<a class="btn btn-primary" th:href="@{/createCustomer}" role="button">Add</a></li>
+    <li class="list-group-item">See list of customers<button  type="button" class="btn btn-primary">Show</button></li>
+    <li class="list-group-item">Search a customer account<a class="btn btn-primary" th:href="@{/searchCustomerSelection}" role="button">Search</a></li>
+</ul>
+
+
+<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->

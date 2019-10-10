@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/html">
+<!--/*/ <th:block th:include="fragments/header :: includes"></th:block> /*/-->
+<body>
+
+<div class="container">
+    <br/>
+    <div class="row">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+            <li class="breadcrumb-item"><a th:href="@{/setcustompath}">Get another Path</a></li>
+        </ol>
+    </div>
+    <br/>
+    <br/>
+    <h1>
+        Here is your Custom Path ! :
+    </h1>
+    <div>
+        <table class="table" th:action="@{/setcustompath}" th:object="${CustomPath}" id="customPath">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Store</th>
+            </tr>
+            </thead>
+            <tbody>
+            <div th:each="store : ${CustomPath}">
+                <tr>
+                    <th scope="row" th:id="${store.getKey()}" th:value="${store.getKey()}" th:text="${store.getKey()}" ></th>
+                    <td th:id="${store.getValue()}" th:value="${store.getValue()}" th:text="${store.getValue()}"></td>
+                </tr>
+            </div>
+
+            </tbody>
+        </table>
+    </div>
+
+</div>
+<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+
+    <title>Store</title>
+</head>
+<body>
+<!--<form method="post" action="storeView"> -->
+    <form action="#" th:action="@{/storeView}" method="post" id="storeView">
+    <fieldset>
+        <legend>Create a new store</legend>
+        <br />
+        <label for="label">Label </label>
+        <input type="text" id="label" name="label" value="" size="20" maxlength="60" />
+        <br /><br />
+
+        <label for="location"> Location </label>
+        <select name="location" id="location">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+        </select>
+        <br /><br />
+
+        <label for="category"> Category </label>
+        <select name="category" id="category">
+            <option value="fashion">Fashion</option>
+            <option value="food">Food</option>
+        </select>
+
+        <br /><br />
+
+        <input type="submit" value="Create" />
+        <br /><br />
+    </fieldset>
+</form>
+</body>
+</html>

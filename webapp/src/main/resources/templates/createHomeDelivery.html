@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--/*/ <th:block th:include="fragments/header :: includes"></th:block> /*/-->
+<body>
+<!--/*@thymesVar id="homeDelivery" type=""*/-->
+<form action="#" th:action="@{/createHomeDelivery}" th:object="${HomeDelivery}" method="post" id="createHomeDelivery">
+    <h1>CREATE NEW HOME DELIVERY</h1>
+    <div class="form-row">
+        <ul class="list-group">
+            <li>
+                <div class="form-group col-md-6">
+                    <label for="inputProductId"><bold>Product id</bold></label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="inputProductId" th:field="*{productId}">
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="form-group col-md-6">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">€</div>
+                        </div>
+                        <input type="text" class="form-control" id="price" th:field="*{price}">
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="form-group col-md-6">
+                    <label for="deliveryTime"><bold>Delivery time</bold></label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="deliveryTime" th:field="*{deliveryTime}">
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="form-group col-md-12">
+                    <label for="description"><bold>Description</bold></label>
+                    <div class="input-group">
+                        <textarea type="text" class="form-control" id="description" th:field="*{description}"></textarea>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>
+</body>
+</html>
+<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->

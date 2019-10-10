@@ -1,0 +1,204 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/themes/smoothness/jquery-ui.css" />
+    <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/kt-2.5.0/r-2.2.2/datatables.min.css"/>
+</head>
+
+<body>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.18/kt-2.5.0/r-2.2.2/datatables.min.js"></script>
+
+<div class="container">
+    <br>
+    <!-- <div class="row">
+         <ol class="breadcrumb">
+             <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+             <li class="breadcrumb-item"><a th:href="@{/productsmanage}">Manage stores</a></li>
+             <li class="breadcrumb-item active">Advanced search</li>
+         </ol>
+     </div> -->
+
+    <form id="form">
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="category">Category</label>
+                <select class="form-control" id="category" name="category">
+                    <option selected value="">All</option>
+                    <option th:each="c : ${categories}" th:value="${c.name}" th:text="${c.name}"/>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="floor_level">Floor level</label>
+                <select class="form-control" id="floor_level" name="floor_level">
+                    <option selected value="">All</option>
+                   <!-- <option th:each="c : ${locations}" th:value="${c.floorLevel}" th:text="${c.floorLevel}"/> -->
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="aisle">Aisle</label>
+                <select class="form-control" id="aisle" name="aisle">
+                    <option selected value="">All</option>
+                    <option th:each="c : ${locations}" th:value="${c.aisle}" th:text="${c.aisle}"/>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-auto">
+                <select class="form-control" id="area_min" name="area_min">
+                    <option selected value="-1">Min area</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                    <option value="50">50</option>
+                    <option value="75">75</option>
+                    <option value="100">100</option>
+                    <option value="150">150</option>
+                    <option value="200">200</option>
+                    <option value="250">250</option>
+                </select>
+            </div>
+
+            <div class="col-auto">
+                <select class="form-control" id="area_max" name="area_max" >
+                    <option selected value="-1">Max area</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                    <option value="50">50</option>
+                    <option value="75">75</option>
+                    <option value="100">100</option>
+                    <option value="150">150</option>
+                    <option value="200">200</option>
+                    <option value="250">250</option>
+                </select>
+            </div>
+        </div>
+
+    </br>
+
+        <div class="row">
+            <div class="col-auto">
+                <select class="form-control" id="rent_min" name="rent_min">
+                    <option selected value="-1">Min rent</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                    <option value="50">50</option>
+                    <option value="75">75</option>
+                    <option value="100">100</option>
+                    <option value="150">150</option>
+                    <option value="200">200</option>
+                    <option value="250">250</option>
+                    <option value="500">500</option>
+                    <option value="1000">1 000</option>
+                </select>
+            </div>
+
+            <div class="col-auto">
+                <select class="form-control" id="rent_max" name="rent_max" >
+                    <option selected value="-1">Max rent</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                    <option value="50">50</option>
+                    <option value="75">75</option>
+                    <option value="100">100</option>
+                    <option value="150">150</option>
+                    <option value="200">200</option>
+                    <option value="250">250</option>
+                    <option value="500">500</option>
+                    <option value="1000">1 000</option>
+                </select>
+            </div>
+        </div>
+    </form>
+
+    <br>
+
+    <table id="result" class="table table-hover table-bordered table-striped">
+        <thead>
+        <tr class="table-default">
+            <th>Name</th>
+            <th>Category</th>
+            <th>Floor level</th>
+            <th>Aisle</th>
+            <th>Location number</th>
+            <th>Area</th>
+            <th>Rent</th>
+        </tr>
+        </thead>
+        <!-- <tbody>
+
+         </tbody> -->
+    </table>
+</div>
+
+</body>
+</html>
+<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
+
+<script type="text/javascript">
+
+    $(function(){
+
+        var str = $('#form').serialize();
+        var table = $('#result').DataTable({
+            'ajax': {
+                'contentType': 'application/json',
+                'url': '[[@{/store}]]?' + str,
+                'type': 'POST',
+                'data': function (d) {
+                    return JSON.stringify(d);
+                }
+            },columns: [
+                { data: 'label' },
+                { data: 'storeCategory.name' },
+                { data: 'location.floorLevel' },
+                { data: 'location.aisle' },
+                { data: 'location.num' },
+                { data: 'location.area' },
+                { data: 'location.rent' }
+            ],
+            searching: true,
+            "processing": true,
+            "serverSide": true,
+            searchDelay: 1000
+
+        });
+
+        $('#form').change(function() {
+            redraw();
+        });
+
+        function redraw() {
+            table.clear();
+
+            var str = $('#form').serialize();
+
+
+            table.ajax.url( '[[@{/store}]]?'+ str ).load();
+        }
+
+    });
+</script>

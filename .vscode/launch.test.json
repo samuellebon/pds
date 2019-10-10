@@ -1,0 +1,84 @@
+{
+    "run": {
+        "default": "",
+        "items": [
+            {
+                "name": "webapp",
+                "projectName": "webapp",
+                "workingDirectory": "/Users/chmouel/Documents/PDS/repo/kan10/kand10parent/webapp",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            },
+            {
+                "name": "domain",
+                "projectName": "domain",
+                "workingDirectory": "/Users/chmouel/Documents/PDS/repo/kan10/kand10parent/domain",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            },
+            {
+                "name": "model",
+                "projectName": "model",
+                "workingDirectory": "/Users/chmouel/Documents/PDS/repo/kan10/kand10parent/model",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            },
+            {
+                "name": "util",
+                "projectName": "util",
+                "workingDirectory": "/Users/chmouel/Documents/PDS/repo/kan10/kand10parent/util",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    },
+    "debug": {
+        "default": "",
+        "items": [
+            {
+                "name": "webapp",
+                "projectName": "webapp",
+                "workingDirectory": "/Users/chmouel/Documents/PDS/repo/kan10/kand10parent/webapp",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            },
+            {
+                "name": "domain",
+                "projectName": "domain",
+                "workingDirectory": "/Users/chmouel/Documents/PDS/repo/kan10/kand10parent/domain",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            },
+            {
+                "name": "model",
+                "projectName": "model",
+                "workingDirectory": "/Users/chmouel/Documents/PDS/repo/kan10/kand10parent/model",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            },
+            {
+                "name": "util",
+                "projectName": "util",
+                "workingDirectory": "/Users/chmouel/Documents/PDS/repo/kan10/kand10parent/util",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    }
+}

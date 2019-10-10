@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--/*/ <th:block th:include="fragments/header :: includes"></th:block> /*/-->
+<body>
+<br/>
+<br/>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <h3 class="menu-title">PhyGit Mall Menu</h3>
+            <div class="list-group">
+                <a href="#" class="list-group-item list-group-item-action active">Home</a>
+                <a th:href="@{/productsmanage}" class="list-group-item list-group-item-action">Manage Products</a>
+                <a th:href="@{/deliveriesmenu}" class="list-group-item list-group-item-action">Manage Deliveries</a>
+                <a th:href="@{/accountmanage}" class="list-group-item list-group-item-action">Manage Accounts</a>
+                <a th:href="@{/searchstore}" class="list-group-item list-group-item-action">Manage Stores</a>
+                <a th:href="@{/eventsmanage}" class="list-group-item list-group-item-action">Manage Events</a>
+                <a th:href="@{/setcustompath}" class="list-group-item list-group-item-action">Manage Paths</a>
+                <a th:href="@{/statisticsmanage}" class="list-group-item list-group-item-action">Manage Statistics</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->

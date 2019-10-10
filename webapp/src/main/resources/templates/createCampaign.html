@@ -1,0 +1,275 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/themes/smoothness/jquery-ui.css" />
+    <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/kt-2.5.0/r-2.2.2/datatables.min.css"/>
+</head>
+
+<body>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.18/kt-2.5.0/r-2.2.2/datatables.min.js"></script>
+
+<div class="container">
+    <br>
+     <div class="row">
+         <ol class="breadcrumb">
+             <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+             <li class="breadcrumb-item"><a th:href="@{/eventsmanage}">Manage events</a></li>
+             <li class="breadcrumb-item active">Create a campaign</li>
+         </ol>
+     </div>
+
+    <br>
+
+    <form id="form">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <h2>Event</h2>
+                <select class="form-control" id="event" name="event">
+                    <option selected value="">Select an event</option>
+                    <option th:each="c : ${events}" th:id="${c.id}" th:value="${c.id}" th:text="${c.label}"/>
+                </select>
+            </div>
+        </div>
+    </form>
+
+        <br>
+        <br>
+
+        <h2>Profiles list</h2>
+
+        <table id="profilTable" class="table table-hover table-bordered table-striped">
+            <thead>
+            <tr class="table-default">
+                <th>Label</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+        </table>
+
+        <br>
+        <br>
+
+        <h2>Stores list</h2>
+
+        <table id="storeTable" class="table table-hover table-bordered table-striped">
+            <thead>
+            <tr class="table-default">
+                <th>Label</th>
+                <th>Categories</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+        </table>
+
+        <br>
+        <br>
+
+        <h2>Products list</h2>
+
+        <table id="productTable" class="table table-hover table-bordered table-striped">
+            <thead>
+            <tr class="table-default">
+                <th>Label</th>
+                <th>Category</th>
+                <th>Keywords</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+
+    <br>
+    <br>
+
+    <button class="btn btn-primary btn-lg" id="CreateCampaign" style="margin-left:400px;"> Create </button>
+</body>
+</html>
+<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
+
+<script type="text/javascript">
+
+    $(function(){
+
+        $('#profilTable').DataTable({
+            'ajax': {
+                'contentType': 'application/json',
+                'url': '[[@{/fetchProfile}]]',
+                'type': 'POST',
+                'data': function (d) {
+                    return JSON.stringify(d);
+                }
+            },columns: [
+                { data: 'label' },
+                { data: 'description' },
+                {
+                    data: 'id',
+                    render : function (data) {
+                        return '<button class="btn btn-sm btn-outline-success" id="addProfile_' + data + '"> Add </button>' +
+                            '<button class="btn btn-sm btn-outline-danger" id="removeProfile_' + data + '" style="display:none;"> Remove </button>';
+                    }
+                }
+            ],
+            searching: true,
+            "processing": true,
+            "serverSide": true,
+            searchDelay: 100,
+
+        });
+
+        $('#storeTable').DataTable({
+            'ajax': {
+                'contentType': 'application/json',
+                'url': '[[@{/fetchStore}]]',
+                'type': 'POST',
+                'data': function (d) {
+                    return JSON.stringify(d);
+                }
+            },columns: [
+                { data: 'label' },
+                { data: 'categoriesName' },
+                {
+                    data: 'id',
+                    render : function (data) {
+                        return '<button class="btn btn-sm btn-outline-success" id="addStore_' + data + '"> Add </button>' +
+                            '<button class="btn btn-sm btn-outline-danger" id="removeStore_' + data + '" style="display:none;"> Remove </button>';
+                    }
+                }
+            ],
+            searching: true,
+            "processing": true,
+            "serverSide": true,
+            searchDelay: 100,
+
+        });
+
+        $('#productTable').DataTable({
+            'ajax': {
+                'contentType': 'application/json',
+                'url': '[[@{/fetchProduct}]]',
+                'type': 'POST',
+                'data': function (d) {
+                    return JSON.stringify(d);
+                }
+            },columns: [
+                { data: 'name' },
+                { data: 'productCategory.name' },
+                { data: 'keywords' },
+                {
+                    data: 'id',
+                    render : function (data) {
+                        return '<button class="btn btn-sm btn-outline-success" id="addProduct_' + data + '"> Add </button>' +
+                            '<button class="btn btn-sm btn-outline-danger" id="removeProduct_' + data + '" style="display:none;"> Remove </button>';
+                    }
+                }
+            ],
+            searching: true,
+            "processing": true,
+            "serverSide": true,
+            searchDelay: 100,
+
+        });
+
+        $('#profilTable').on('click', 'button[id^="addProfile_"]', function(){
+            var id = Number((this.id).match(/\d+$/));
+
+            $.ajax({
+                url: '[[@{/addProfile?id=}]]' + id,
+                type: 'put',
+            })
+
+            $('#' + this.id).hide();
+            $('#removeProfile_' + id).show();
+        });
+
+        $('#storeTable').on('click', 'button[id^="addStore_"]', function(){
+            var id = Number((this.id).match(/\d+$/));
+
+            $.ajax({
+                url: '[[@{/addStore?id=}]]' + id,
+                type: 'put',
+            })
+
+            $('#' + this.id).hide();
+            $('#removeStore_' + id).show();
+        });
+
+        $('#productTable').on('click', 'button[id^="addProduct_"]', function(){
+            var id = Number((this.id).match(/\d+$/));
+
+            $.ajax({
+                url: '[[@{/addProduct?id=}]]' + id,
+                type: 'put',
+            })
+
+            $('#' + this.id).hide();
+            $('#removeProduct_' + id).show();
+        });
+
+        $('#profilTable').on('click', 'button[id^="removeProfile_"]', function(){
+            var id = Number((this.id).match(/\d+$/));
+
+            $.ajax({
+                url: '[[@{/removeProfile?id=}]]' + id,
+                type: 'put',
+            })
+
+            $('#' + this.id).hide();
+            $('#addProfile_' + id).show();
+        });
+
+        $('#storeTable').on('click', 'button[id^="removeStore_"]', function(){
+            var id = Number((this.id).match(/\d+$/));
+
+            $.ajax({
+                url: '[[@{/removeStore?id=}]]' + id,
+                type: 'put',
+            })
+
+            $('#' + this.id).hide();
+            $('#addStore_' + id).show();
+        });
+
+        $('#productTable').on('click', 'button[id^="removeProduct_"]', function(){
+            var id = Number((this.id).match(/\d+$/));
+
+            $.ajax({
+                url: '[[@{/removeProduct?id=}]]' + id,
+                type: 'put',
+            })
+
+            $('#' + this.id).hide();
+            $('#addProduct_' + id).show();
+        });
+
+        $('#CreateCampaign').on('click', function(){
+
+            $.ajax({
+                url: '[[@{/createCampaign}]]',
+                type: 'post',
+            })
+        });
+
+        $('#event').on('change', function(){
+            var id = $('#event option:selected').attr('id');
+
+            $.ajax({
+                url: '[[@{/addEvent?id=}]]' + id,
+                type: 'put',
+            })
+        });
+
+        $(window).bind('beforeunload', function() {
+            $.ajax({
+                url: '[[@{/resetCampaign}]]',
+                type: 'put',
+            })
+        });
+    });
+
+</script>

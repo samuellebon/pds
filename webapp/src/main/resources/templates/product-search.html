@@ -1,0 +1,173 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--/*/ <th:block th:include="fragments/header :: includes"></th:block> /*/-->
+
+<head>
+    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/themes/smoothness/jquery-ui.css" />
+    <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/kt-2.5.0/r-2.2.2/datatables.min.css"/>
+</head>
+
+<body>
+
+<script defer  type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script defer  src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script defer type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.18/kt-2.5.0/r-2.2.2/datatables.min.js"></script>
+
+<div class="container">
+    <br>
+    <div class="row">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+            <li class="breadcrumb-item"><a th:href="@{/productsmanage}">Manage Products</a></li>
+            <li class="breadcrumb-item active">Advanced Search product</li>
+        </ol>
+    </div>
+
+    <form id="form">
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="category">Store</label>
+                <select class="form-control" id="store" name="store">
+                    <option selected value="">filter by store</option>
+                    <option th:each="c : ${stores}" th:value="${c.label}" th:text="${c.label}"/>
+                </select>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="category">Category</label>
+                <select class="form-control" id="category" name="category">
+                    <option selected value="">filter by category</option>
+                    <option th:each="c : ${categories}" th:value="${c.name}" th:text="${c.name}"/>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-auto">
+                <label for="price_min">Price between</label>
+            </div>
+            <div class="col-auto">
+                <select class="form-control" id="price_min" name="price_min">
+                    <option selected value="-1">Min Price</option>
+                    <option>0</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                    <option value="50">50</option>
+                    <option value="75">75</option>
+                    <option value="100">100</option>
+                    <option value="150">150</option>
+                    <option value="200">200</option>
+                    <option value="250">250</option>
+                    <option value="500">500</option>
+                    <option value="1000">1 000</option>
+                </select>
+            </div>
+
+            <div class="col-auto">
+                <span>and</span>
+            </div>
+
+            <div class="col-auto">
+                <select class="form-control" id="price_max" name="price_max" >
+                    <option selected value="-1">Max price</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                    <option value="50">50</option>
+                    <option value="75">75</option>
+                    <option value="100">100</option>
+                    <option value="150">150</option>
+                    <option value="200">200</option>
+                    <option value="250">250</option>
+                    <option value="500">500</option>
+                    <option value="1000">1 000</option>
+                    <option value="-1">More than 1 000</option>
+                </select>
+            </div>
+        </div>
+    </form>
+
+    <br>
+
+    <table id="result" class="table table-hover table-bordered table-striped">
+        <thead>
+        <tr class="table-default">
+            <th>Name</th>
+            <th>Description</th>
+            <th>Weight</th>
+            <th>Width</th>
+            <th>Length</th>
+            <th>Height</th>
+            <th>Category</th>
+            <th>Store</th>
+            <th>Price</th>
+        </tr>
+        </thead>
+        <!-- <tbody>
+
+         </tbody> -->
+    </table>
+</div>
+
+</body>
+</html>
+<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
+
+<script type="text/javascript">
+
+    $(function(){
+
+        var str = $('#form').serialize();
+
+        var table = $('#result').DataTable({
+            'ajax': {
+                'contentType': 'application/json',
+                'url': '[[@{/storeProduct}]]?' + str,
+                'type': 'POST',
+                'data': function (d) {
+                    return JSON.stringify(d);
+                }
+            },columns: [
+                { data: 'product.name' },
+                { data: 'product.description' },
+                { data: 'product.weight' },
+                { data: 'product.width' },
+                { data: 'product.length' },
+                { data: 'product.height' },
+                { data: 'product.productCategory.name' },
+                { data: 'store.label' },
+                { data: 'price.finalPrice' }
+            ],
+            searching: true,
+            "processing": true,
+            "serverSide": true,
+            searchDelay: 1000
+
+        });
+
+        $('#form').change(function() {
+            redraw();
+        });
+
+        function redraw() {
+            table.clear();
+
+            var str = $('#form').serialize();
+
+            console.log('[[@{/storeProduct}]]?'+ str);
+
+            table.ajax.url( '[[@{/storeProduct}]]?'+ str ).load();
+        }
+
+    });
+
+
+
+
+</script>
