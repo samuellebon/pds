@@ -13,14 +13,32 @@ pipeline {
                     }
 
                 }
-      
-                stage('Build and analysis') {
+
+                stage('Build') {
 
                     steps {
-                        sh "mvn clean install -Dmaven.test.skip=true && mvn com.github.spotbugs:spotbugs-maven-plugin:3.1.7:spotbugs"
+                        sh "mvn clean install -Dmaven.test.skip=true"
 
                     }
-                                
+
+                }
+
+                stage('Spotbugs analysis') {
+
+                    steps {
+                        sh "mvn com.github.spotbugs:spotbugs-maven-plugin:3.1.7:spotbugs"
+
+                    }
+
+                }
+
+                stage('Sonarqube analysis') {
+
+                    steps {
+                        sh "mvn sonar:sonar"
+
+                    }
+
                 }
 
                 stage('Publish Spotbugs') {
